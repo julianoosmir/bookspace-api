@@ -1,14 +1,16 @@
 package com.juliano.bookstore.domain;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.GenetedValue;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
 
 @Entity 
-public class Categria implements Serializable{
+public class Categoria implements Serializable{
 
     private static final long serialVersionUID = 1l;
 
@@ -17,14 +19,15 @@ public class Categria implements Serializable{
     private Integer id;
     private String nome;
     private String descricao;
+    @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>(); 
 
 
-    public Categria(){
+    public Categoria(){
         super();
     }    
 
-    public Categria(Integer id, String nome, String descricao, List<Livro> livros) {
+    public Categoria(Integer id, String nome, String descricao, List<Livro> livros) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -55,23 +58,23 @@ public class Categria implements Serializable{
         this.descricao = descricao;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Categria)) {
+        if (!(o instanceof Categoria)) {
             return false;
         }
-        Categria categria = (Categria) o;
-        return Objects.equals(id, categria.id);
+        Categoria categoria = (Categoria) o;
+        return Objects.equals(id, categoria.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
    
 
 }

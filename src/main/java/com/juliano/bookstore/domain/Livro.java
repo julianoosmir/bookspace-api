@@ -1,37 +1,41 @@
 package com.juliano.bookstore.domain;
 
 import java.io.Serializable;
-
+import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.GenetedValue;
+import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
 
-@Entity 
-public class Livro implements Serializable{
+@Entity
+public class Livro implements Serializable {
 
   private static final long serialVersionUID = 1l;
   @Id
-  @GenetedValue(strategy = GenetionType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
   private String titulo;
   private String nome_autor;
   private String texto;
 
-  private Categria categria;
+  @ManyToOne
+  @JoinColumn(name = "categoria_id")
+  private Categoria categoria;
 
   public Livro(){
     super();
   }
 
 
-  public Livro(Integer id, String titulo, String nome_autor, String texto, Categria categria) {
+  public Livro(Integer id, String titulo, String nome_autor, String texto, Categoria categoria) {
     super();
     this.id = id;
     this.titulo = titulo;
     this.nome_autor = nome_autor;
     this.texto = texto;
-    this.categria = categria;
+    this.categoria = categoria;
   }
 
   public Integer getId() {
@@ -66,12 +70,12 @@ public class Livro implements Serializable{
     this.texto = texto;
   }
 
-  public Categria getCategria() {
-    return this.categria;
+  public Categoria getCategoria() {
+    return this.categoria;
   }
 
-  public void setCategria(Categria categria) {
-    this.categria = categria;
+  public void setCategoria(Categoria Categoria) {
+    this.categoria = Categoria;
   }
 
 
