@@ -1,7 +1,18 @@
 package com.juliano.bookstore.domain;
 
-public class Livro {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GenetedValue;
+import javax.persistence.GenerationType;
+
+@Entity 
+public class Livro implements Serializable{
+
+  private static final long serialVersionUID = 1l;
+  @Id
+  @GenetedValue(strategy = GenetionType.IDENTITY)
   private Integer id;
   private String titulo;
   private String nome_autor;
