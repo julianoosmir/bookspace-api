@@ -27,11 +27,10 @@ public class Categoria implements Serializable{
         super();
     }    
 
-    public Categoria(Integer id, String nome, String descricao, List<Livro> livros) {
+    public Categoria(Integer id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.livros = livros;
     }
 
     public Integer getId() {
@@ -57,6 +56,16 @@ public class Categoria implements Serializable{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+
+    public List<Livro> getLivros() {
+        return this.livros;
+    }
+
+    public void setLivros(List<Livro> livros) {
+        this.livros = livros;
+    }
+
 
     @Override
     public boolean equals(Object o) {
