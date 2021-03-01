@@ -3,9 +3,11 @@ package com.juliano.bookstore.service;
 import java.util.Optional;
 
 import com.juliano.bookstore.domain.Categoria;
+import com.juliano.bookstore.dtos.CategoriaDTO;
 import com.juliano.bookstore.repository.CategoriaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,4 +32,12 @@ public class CategoriaService {
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
+
+	public Categoria update(Integer id, CategoriaDTO objDto) {
+        Categoria obj = findById(id);
+        obj.setNome(objDto.getNome());
+        obj.setDescricao(objDto.getDescricao());
+        return categoriaRepository.save(obj);
+    }
+    
 }
