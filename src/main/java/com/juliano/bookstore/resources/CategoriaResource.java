@@ -1,6 +1,10 @@
 package com.juliano.bookstore.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.juliano.bookstore.domain.Categoria;
+import com.juliano.bookstore.dtos.CategoriaDTO;
 import com.juliano.bookstore.service.CategoriaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +26,12 @@ public class CategoriaResource {
         Categoria obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
-}
+
+    @GetMapping
+    public ResponseEntity<List<CategoriaDTO>> findAll() {
+        List<Categoria> list = service.findAll();
+        List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
+
+    }
+} 
