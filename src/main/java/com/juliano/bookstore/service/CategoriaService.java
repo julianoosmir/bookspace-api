@@ -7,7 +7,7 @@ import com.juliano.bookstore.dtos.CategoriaDTO;
 import com.juliano.bookstore.repository.CategoriaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.support.Repositories;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,21 +28,28 @@ public class CategoriaService {
     public List<Categoria> findAll() {
         return categoriaRepository.findAll();
     }
-    public Categoria create(Categoria obj){
+
+    public Categoria create(Categoria obj) {
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
 
-	public Categoria update(Integer id, CategoriaDTO objDto) {
+    public Categoria update(Integer id, CategoriaDTO objDto) {
         Categoria obj = findById(id);
         obj.setNome(objDto.getNome());
         obj.setDescricao(objDto.getDescricao());
         return categoriaRepository.save(obj);
     }
 
-	public void delete(Integer id) {
+    public void delete(Integer id) {
         findById(id);
-        categoriaRepository.deleteById(id);
+        
+        try {
+            categoriaRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+           throw new com.juliano.bookstore.service.exceptions.DataIntegrityViolationException(
+               "categoria não pode ser deletada! possui livros associados");
+        }
 	}
-    
+
 }
