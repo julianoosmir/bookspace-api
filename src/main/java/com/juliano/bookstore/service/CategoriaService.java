@@ -47,7 +47,7 @@ public class CategoriaService {
         try {
             categoriaRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-           throw new com.juliano.bookstore.service.exceptions.DataIntegrityViolationException(
+           throw new com.juliano.bookstore.service  .exceptions.DataIntegrityViolationException(
                "categoria não pode ser deletada! possui livros associados");
         }
 	}
