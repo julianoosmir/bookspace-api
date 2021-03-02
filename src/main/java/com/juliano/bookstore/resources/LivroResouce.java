@@ -1,19 +1,18 @@
 package com.juliano.bookstore.resources;
 
 import java.net.URI;
-import java.security.Provider.Service;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import com.juliano.bookstore.domain.Livro;
 import com.juliano.bookstore.dtos.LivroDTO;
 import com.juliano.bookstore.service.LivroService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/livros")
 public class LivroResouce {
@@ -48,20 +48,20 @@ public class LivroResouce {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Livro> update(@PathVariable Integer id, @RequestBody Livro obj) {
+    public ResponseEntity<Livro> update(@PathVariable Integer id, @Valid @RequestBody Livro obj) {
         Livro newObj = service.update(id, obj);
         return ResponseEntity.ok().body(newObj);
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<Livro> updatePatch(@PathVariable Integer id, @RequestBody Livro obj) {
+    public ResponseEntity<Livro> updatePatch(@PathVariable Integer id, @Valid @RequestBody Livro obj) {
         Livro newObj = service.update(id, obj);
         return ResponseEntity.ok().body(newObj);
     }
 
     @PostMapping
     public ResponseEntity<Livro> create(@RequestParam(value = "categoria", defaultValue = "0") Integer id_cat,
-            @RequestBody Livro obj) {
+            @Valid @RequestBody Livro obj) {
         Livro newObj = service.create(id_cat, obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/livros/{id}")
                 .buildAndExpand(newObj.getId()).toUri();
